@@ -102,14 +102,18 @@ The exit code is `0` on success and `2` on bad input.
 
 ```python
 from deflated_sharpe import (
-    moments, deflated_sharpe_ratio, probabilistic_sharpe_ratio,
-    min_track_record_length, probability_of_backtest_overfitting,
+    moments,
+    deflated_sharpe_ratio,
+    probabilistic_sharpe_ratio,
+    min_track_record_length,
+    probability_of_backtest_overfitting,
 )
 
-m = moments(daily_returns)                      # Sharpe (per period), skew, raw kurtosis
+m = moments(daily_returns)  # Sharpe (per period), skew, raw kurtosis
 psr = probabilistic_sharpe_ratio(m.sharpe, m.n, m.skew, m.kurtosis)
-dsr = deflated_sharpe_ratio(m.sharpe, m.n, n_trials=120, sharpe_variance=0.0015,
-                            skew=m.skew, kurtosis=m.kurtosis)
+dsr = deflated_sharpe_ratio(
+    m.sharpe, m.n, n_trials=120, sharpe_variance=0.0015, skew=m.skew, kurtosis=m.kurtosis
+)
 trl = min_track_record_length(m.sharpe, m.skew, m.kurtosis)
 
 res = probability_of_backtest_overfitting(list_of_trial_return_series, n_splits=16)
